@@ -28,7 +28,3 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
-
-config :elixir_kubernetes_cluster, kube_api_endpoint: "http://localhost:8001"
-config :elixir_kubernetes_cluster, app_namespace_env: "MY_POD_NAMESPACE"
-config :elixir_kubernetes_cluster, pod_name_env: "MY_POD_NAME"

@@ -1,3 +1,6 @@
+# Changelog for v0.1.4
+- pass default env values in mix.exs
+
 # Changelog for v0.1.3
 - relax dependencies
 

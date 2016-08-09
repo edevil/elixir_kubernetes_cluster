@@ -3,7 +3,7 @@ defmodule ElixirKubernetesCluster.Mixfile do
 
   def project do
     [app: :elixir_kubernetes_cluster,
-     version: "0.1.3",
+     version: "0.1.4",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -22,7 +22,10 @@ defmodule ElixirKubernetesCluster.Mixfile do
 
   def application do
     [applications: [:logger, :httpoison],
-     mod: {ElixirKubernetesCluster, []}]
+     mod: {ElixirKubernetesCluster, []},
+     env: [kube_api_endpoint: "http://localhost:8001",
+           app_namespace_env: "MY_POD_NAMESPACE",
+           pod_name_env: "MY_POD_NAME"]]
   end
 
   defp deps do
