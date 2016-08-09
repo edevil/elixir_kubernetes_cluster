@@ -1,3 +1,6 @@
+# Changelog for v0.1.3
+- relax dependencies
+
 # Changelog for v0.1.2
 
 - ignore own pod
