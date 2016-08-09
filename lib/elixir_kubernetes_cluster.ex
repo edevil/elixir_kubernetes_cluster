@@ -1,4 +1,7 @@
 defmodule ElixirKubernetesCluster do
+  @moduledoc """
+  Supervisor tree.
+  """
   use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html

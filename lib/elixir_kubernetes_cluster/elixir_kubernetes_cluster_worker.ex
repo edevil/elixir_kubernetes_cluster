@@ -1,4 +1,7 @@
 defmodule ElixirKubernetesCluster.Worker do
+  @moduledoc """
+  Contacts Kubernetes to check the list of node IPs
+  """
   use GenServer
   require Logger
 
@@ -34,15 +37,18 @@ defmodule ElixirKubernetesCluster.Worker do
     pod_name_env = Application.get_env(:elixir_kubernetes_cluster, :pod_name_env)
     app_namespace = System.get_env(app_namespace_env)
     pod_name = System.get_env(pod_name_env)
-    %{"pod_prefix" => pod_prefix} =
-      Regex.named_captures(~r/^(?<pod_prefix>.+?)-(?<dep_id>[^-]+)-(?<pod_id>[^-]+)$/, pod_name)
 
-    case Node.alive? do
-      true ->
-        obtain_pod_info(api_endpoint, app_namespace, pod_prefix)
-        |> connect_to_pods(app_namespace)
-      false ->
+    cond do
+      not Node.alive? ->
         Logger.warn("Local node is not alive, so cannot be part of a distributed system.")
+      not app_namespace or not pod_name ->
+        Logger.info("Did not detect Kubernetes environment")
+      true ->
+        %{"pod_prefix" => pod_prefix} =
+          Regex.named_captures(~r/^(?<pod_prefix>.+?)-(?<dep_id>[^-]+)-(?<pod_id>[^-]+)$/, pod_name)
+        api_endpoint
+        |> obtain_pod_info(app_namespace, pod_prefix)
+        |> connect_to_pods(app_namespace)
     end
 
     GenServer.start_link(__MODULE__, nil, [])

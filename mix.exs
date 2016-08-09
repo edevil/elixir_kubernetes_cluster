@@ -28,6 +28,8 @@ defmodule ElixirKubernetesCluster.Mixfile do
   defp deps do
     [{:ex_doc, ">= 0.0.0", only: :dev},
      {:httpoison, "~> 0.9.0"},
+     {:bypass, "~> 0.1", only: :test},
+     {:credo, "~> 0.4", only: [:dev, :test]},
      {:poison, "~> 2.2"}]
   end
 end
