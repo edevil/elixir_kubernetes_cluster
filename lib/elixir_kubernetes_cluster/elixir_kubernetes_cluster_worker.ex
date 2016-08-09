@@ -9,11 +9,14 @@ defmodule ElixirKubernetesCluster.Worker do
   Contacts the Kubernetes API to obtain a list of pods of the desired namespace.
   Next it filters the pods and maps them to their IP address.
   """
-  def obtain_pod_info(api_endpoint, app_namespace, pod_prefix) do
+  def obtain_pod_info(api_endpoint, app_namespace, pod_name) do
+    %{"pod_prefix" => pod_prefix} =
+      Regex.named_captures(~r/^(?<pod_prefix>.+?)-(?<dep_id>[^-]+)-(?<pod_id>[^-]+)$/, pod_name)
+
     api_url = "#{api_endpoint}/api/v1/namespaces/#{app_namespace}/pods"
     %HTTPoison.Response{:body => body, :status_code => 200} = HTTPoison.get!(api_url)
     %{"items" => items} = Poison.decode!(body)
-    app_pods = Enum.filter(items, fn(pod) -> String.starts_with?(pod["metadata"]["name"], pod_prefix) && pod["status"]["phase"] == "Running" end)
+    app_pods = Enum.filter(items, fn(pod) -> pod["metadata"]["name"] != pod_name && String.starts_with?(pod["metadata"]["name"], pod_prefix) && pod["status"]["phase"] == "Running" end)
     pod_ips = Enum.map(app_pods, fn(pod) -> pod["status"]["podIP"] end)
     pod_ips
   end
@@ -44,10 +47,8 @@ defmodule ElixirKubernetesCluster.Worker do
       not app_namespace or not pod_name ->
         Logger.info("Did not detect Kubernetes environment")
       true ->
-        %{"pod_prefix" => pod_prefix} =
-          Regex.named_captures(~r/^(?<pod_prefix>.+?)-(?<dep_id>[^-]+)-(?<pod_id>[^-]+)$/, pod_name)
         api_endpoint
-        |> obtain_pod_info(app_namespace, pod_prefix)
+        |> obtain_pod_info(app_namespace, pod_name)
         |> connect_to_pods(app_namespace)
     end
 

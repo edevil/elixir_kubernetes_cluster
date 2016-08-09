@@ -76,7 +76,7 @@ defmodule ElixirKubernetesClusterTest do
     {:ok, %{bypass: bypass}}
   end
 
-  test "obtain request token and redirect", %{bypass: bypass} do
+  test "check if pod list is obtained", %{bypass: bypass} do
     Bypass.expect bypass, fn request_conn ->
       assert "GET" == request_conn.method
       assert "/api/v1/namespaces/haypoll/pods" == request_conn.request_path
@@ -85,9 +85,9 @@ defmodule ElixirKubernetesClusterTest do
 
     api_endpoint = "http://localhost:#{bypass.port}"
     app_namespace = "haypoll"
-    pod_prefix = "haypoll-"
-    pod_ips = Worker.obtain_pod_info(api_endpoint, app_namespace, pod_prefix)
-    assert pod_ips == ["10.2.85.9", "10.2.85.10"]
+    pod_name = "haypoll-4180148772-ihj7l"
+    pod_ips = Worker.obtain_pod_info(api_endpoint, app_namespace, pod_name)
+    assert pod_ips == ["10.2.85.10"]
   end
 
 end

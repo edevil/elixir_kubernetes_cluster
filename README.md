@@ -24,6 +24,5 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 ## TODO
 
-1. Ignore our own pod when connecting to list of pods
-2. Periodically compare list of pods from Kubernetes to our list of connected nodes
-3. Reconcile with Kubernetes if lists differ
+1. Periodically compare list of pods from Kubernetes to our list of connected nodes
+2. Reconcile with Kubernetes if lists differ
