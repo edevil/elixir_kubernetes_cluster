@@ -16,6 +16,7 @@ defmodule ElixirKubernetesCluster.Worker do
     api_url = "#{api_endpoint}/api/v1/namespaces/#{app_namespace}/pods"
     %HTTPoison.Response{:body => body, :status_code => 200} = HTTPoison.get!(api_url)
     %{"items" => items} = Poison.decode!(body)
+    Logger.debug("Obtained #{length(items)} pods for namespace #{app_namespace}")
     app_pods = Enum.filter(items, fn(pod) -> pod["metadata"]["name"] != pod_name && String.starts_with?(pod["metadata"]["name"], pod_prefix) && pod["status"]["phase"] == "Running" end)
     pod_ips = Enum.map(app_pods, fn(pod) -> pod["status"]["podIP"] end)
     pod_ips
@@ -24,6 +25,7 @@ defmodule ElixirKubernetesCluster.Worker do
   @doc """
   Given a list of pod_ips, it tries to connect to all of them.
   """
+  def connect_to_pods([], _), do: Logger.info("No nodes to connect to")
   def connect_to_pods(pod_ips, app_namespace) do
     for pod_ip <- pod_ips do
       Logger.debug("Connecting to node running on IP #{pod_ip}")
