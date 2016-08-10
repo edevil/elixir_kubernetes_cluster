@@ -1,3 +1,6 @@
+# Changelog for v0.1.6
+- bugfix
+
 # Changelog for v0.1.5
 - bugfix
 
