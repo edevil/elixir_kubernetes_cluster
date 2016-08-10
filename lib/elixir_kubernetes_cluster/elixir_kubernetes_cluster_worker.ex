@@ -44,7 +44,7 @@ defmodule ElixirKubernetesCluster.Worker do
     cond do
       not Node.alive? ->
         Logger.warn("Local node is not alive, so cannot be part of a distributed system.")
-      not app_namespace or not pod_name ->
+      not app_namespace || not pod_name ->
         Logger.info("Did not detect Kubernetes environment")
       true ->
         api_endpoint
