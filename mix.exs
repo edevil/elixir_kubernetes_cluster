@@ -7,7 +7,7 @@ defmodule ElixirKubernetesCluster.Mixfile do
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     description: "A module that automacally connects to a Kubernetes API in order to obtain the address of other nodes and connects to them.",
+     description: "A module that automatically connects to a Kubernetes API, in order to obtain the address of other nodes, and connects to them.",
      package: package,
      deps: deps()]
   end
