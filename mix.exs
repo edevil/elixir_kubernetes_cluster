@@ -8,7 +8,7 @@ defmodule ElixirKubernetesCluster.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      description: "A module that automatically connects to a Kubernetes API, in order to obtain the address of other nodes, and connects to them.",
-     package: package,
+     package: package(),
      deps: deps()]
   end
 
@@ -30,9 +30,9 @@ defmodule ElixirKubernetesCluster.Mixfile do
 
   defp deps do
     [{:ex_doc, ">= 0.0.0", only: :dev},
-     {:httpoison, "~> 0.9.0"},
+     {:httpoison, "~> 0.11.0"},
      {:bypass, "~> 0.1", only: :test},
      {:credo, "~> 0.4", only: [:dev, :test]},
-     {:poison, "~> 1.5 or ~> 2.0"}]
+     {:poison, "~> 1.5 or ~> 3.0"}]
   end
 end

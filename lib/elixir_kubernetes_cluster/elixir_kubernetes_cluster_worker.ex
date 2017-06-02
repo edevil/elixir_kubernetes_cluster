@@ -36,7 +36,7 @@ defmodule ElixirKubernetesCluster.Worker do
     end
   end
 
-  def start_link() do
+  def start_link do
     api_endpoint = Application.get_env(:elixir_kubernetes_cluster, :kube_api_endpoint)
     app_namespace_env = Application.get_env(:elixir_kubernetes_cluster, :app_namespace_env)
     pod_name_env = Application.get_env(:elixir_kubernetes_cluster, :pod_name_env)
