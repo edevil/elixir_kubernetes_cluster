@@ -1,3 +1,6 @@
+# Changelog for v0.1.8
+- updated dependecy versions
+
 # Changelog for v0.1.7
 - added more logging
 
