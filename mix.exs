@@ -3,7 +3,7 @@ defmodule ElixirKubernetesCluster.Mixfile do
 
   def project do
     [app: :elixir_kubernetes_cluster,
-     version: "0.1.8",
+     version: "0.1.9",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -30,7 +30,7 @@ defmodule ElixirKubernetesCluster.Mixfile do
 
   defp deps do
     [{:ex_doc, ">= 0.0.0", only: :dev},
-     {:httpoison, "~> 0.11.0"},
+     {:httpoison, "~> 0.13.0"},
      {:bypass, "~> 0.1", only: :test},
      {:credo, "~> 0.4", only: [:dev, :test]},
      {:poison, "~> 1.5 or ~> 3.0"}]
